@@ -1,0 +1,254 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Illini Marketplace</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </head>
+
+  <body ng-app="illiniMarketplace" ng-controller="MainCtrl">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Illini Marketplace</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse navbar-right">
+          <form class="navbar-form" style="float:left;">
+            <div class="form-group">
+              <input type="text" ng-model="searchQuery" style="width:300px;" placeholder="Title, Author, ISBN, Keywords, ..." class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+          </form>
+          <button class="btn btn-info" style="float:left;margin-top:8px;margin-left:-10px;" data-toggle="modal" data-target="#sellModal">Sell</button>
+          <a href="#" style="float:left;margin-top:15px;font-size:20px;margin-left:5px;">
+            <span class="glyphicon glyphicon-shopping-cart" ></span>
+            <span class="badge" style="margin-top:-8px;">0</span>
+          </a>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    <!-- Sell Books Modal -->
+    <div class="modal fade" id="sellModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Sell your Book!</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" ng-submit="sellBook()" onsubmit="window.location.assign('#close')">
+          <div class="text-center">
+            <img src="" class="avatar img-circle" alt="avatar">
+            <h6>Upload a different photo...</h6>
+            <input type="file" class="form-control">
+          </div><br>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Contact Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Title:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model="sellBook.title" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Authors:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model="sellBook.author" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Courses:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">ISBN:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Edition:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Condition:</label>
+            <div class="col-lg-8">
+              <div class="ui-select">
+                <select id="book-condition" class="form-control">
+                  <option value="New" ng-model="sellBook.condition">New</option>
+                  <option value="Like New" ng-model="sellBook.condition">Like New</option>
+                  <option value="Poor" ng-model="sellBook.condition">Poor</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Format:</label>
+            <div class="col-lg-8">
+                <label>
+                  <input type="radio" value="Hardcover" ng-model="sellBook.format"> Hardcover
+                </label><br>
+                <label>
+                  <input type="radio" value="Paperback" ng-model="sellBook.format"> Paperback
+                </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Price:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="" ng-model="sellBook.price">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Other descriptions:</label>
+            <div class="col-lg-8">
+              <textarea class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="submit" class="btn btn-primary" value="Sell!">
+              <span></span>
+              <input type="reset" class="btn btn-default" data-dismiss="modal" value="Cancel">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container" style="width:100%;height:50px;"></div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        
+        <!-- Filters Section -->
+        <div class="col-md-3" style="border-right:1px solid #ccc;border-left:1px solid #ccc;position:fixed;height:725px;">
+          <div style="height:50px;width:100%;padding-top:1px;">
+            <h2>Filters</h2><br>
+          </div>
+
+          <div style="border-bottom:1px solid #eee;">
+            <h3>Condition:</h3>
+            <form>
+              <div class="form-group" style="margin-left:15px;">
+                <label>
+                  <input type="radio" value="New" ng-model="filt.condition"> New
+                </label><br>
+                <label>
+                  <input type="radio" value="Like New" ng-model="filt.condition"> Like New
+                </label><br>
+                <label>
+                  <input type="radio" value="Poor" ng-model="filt.condition"> Poor
+                </label>
+              </div>
+            </form>
+          </div>
+
+          <div style="border-bottom:1px solid #eee;">
+            <h3>Price Range:</h3>
+            <form style="margin-left:15px;">
+              <span style="float:left;margin-top:8px;">$</span>
+              <input type="text" style="width:60px;float:left;margin-left:2px;" placeholder="min" class="form-control" name="priceMin" ng-model="minPrice">
+              <span style="float:left;margin-left:5px;margin-top:8px;"> - $</span>
+              <input type="text" style="width:60px;margin-left:5px;" placeholder="max" class="form-control" name="priceMax" ng-model="maxPrice">
+            </form>
+          </div>
+
+          <div style="border-bottom:1px solid #eee;">
+            <h3>Author:</h3>
+            <form style="margin-left:15px;">
+              <div class="form-group" style="margin-left:15px;">
+                <input type="text" style="width:200px;" placeholder="Custom Author" class="form-control" ng-model="filt.author">
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <h3>Format:</h3>
+            <form>
+              <div class="form-group" style="margin-left:15px;">
+                <label>
+                  <input type="radio" ng-model="filt.format" value="Hardcover"> Hardcover
+                </label><br>
+                <label>
+                  <input type="radio" ng-model="filt.format" value="Paperback"> Paperback
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Main Section -->
+        <div class="col-md-9" style="border-right:1px solid #eee;margin-left:360px;">
+          <div class="row" style="border-bottom:1px solid #eee;">
+            <div class="col-md-2" style="background-color:#eee;border-left:1px solid #ccc"></div>
+            <div class="col-md-3" style="background-color:#eee;border-left:1px solid #ccc">
+              <h4>Title</h4>
+            </div>
+            <div class="col-md-3" style="background-color:#eee;border-left:1px solid #ccc">
+              <h4>Author</h4>
+            </div>
+            <div class="col-md-3" style="background-color:#eee;border-left:1px solid #ccc">
+              <h4>Format</h4>
+            </div>
+            <div class="col-md-1" style="background-color:#eee;border-left:1px solid #ccc">
+              <h4>Price</h4>
+            </div>
+          </div>
+
+          <div class="row" ng-repeat="book in bookListing | filter:searchQuery | filter:filt.author">
+            <div class="col-md-2" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;"></div>
+            <div class="col-md-3" style="border-left:1px solid #ccc;min-height:50px;border-bottom:1px solid #ccc;">
+              <p>{{book.title}}</p>
+            </div>
+            <div class="col-md-3" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
+              <p>{{book.author}}</p>
+            </div>
+            <div class="col-md-3" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
+              <p>{{book.format}}</p>
+            </div>
+            <div class="col-md-1" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
+              <p>${{book.price}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+  </body>
+</html>
