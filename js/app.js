@@ -15,10 +15,10 @@ app.controller('MainCtrl', ['$scope',
     $scope.format = '';
 
     $scope.bookListing = [
-      { thumbnail: '', title: 'Calculus: Early Transcendentals, 7th Edition', author: 'James Stewart', format: 'Hardcover', condition: 'Poor', price: 35 },
-      { thumbnail: '', title: 'Molecular Biology of the Gene, Sixth Edition', author: 'James D. Watson', format: 'Paperback', condition: 'Like New', price: 45 },
+      { thumbnail: '', title: 'Calculus, Seventh Edition', author: 'James Stewart', format: 'Hardcover', condition: 'Poor', price: 35 },
+      { thumbnail: '', title: 'Biology, Sixth Edition', author: 'James D. Watson', format: 'Paperback', condition: 'Like New', price: 45 },
       { thumbnail: '', title: 'CoreMacroeconomics', author: 'Eric Chiang', format: 'Paperback', condition: 'Poor', price: 20},
-      { thumbnail: '', title: 'Fundamentals of Anatomy & Physiology', author: 'Frederic Martini', format: 'Hardcover', condition: 'New', price: 40},
+      { thumbnail: '', title: 'Fundamentals of Anatomy', author: 'Frederic Martini', format: 'Hardcover', condition: 'New', price: 40},
       { thumbnail: '', title: 'University Physics', author: 'Daniel Rubinfield', format: 'Hardcover', condition: 'New', price: 70}
     ];
 
