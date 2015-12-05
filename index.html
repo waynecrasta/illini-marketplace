@@ -161,7 +161,7 @@
             <form>
               <div class="form-group" style="margin-left:15px;">
                 <label>
-                  <input type="radio" value="New" ng-model="filt.condition"> New
+                  <input type="radio" name="New" value="New" ng-model="filt.condition"> New
                 </label><br>
                 <label>
                   <input type="radio" value="Like New" ng-model="filt.condition"> Like New
@@ -226,9 +226,11 @@
           </div>
 
           <div class="row" ng-repeat="book in bookListing | filter:searchQuery | filter:filt">
-            <div class="col-md-2" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;"></div>
+            <div class="col-md-2" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
+              <img ng-src="" style="" />
+            </div>
             <div class="col-md-3" style="border-left:1px solid #ccc;min-height:50px;border-bottom:1px solid #ccc;">
-              <p>{{book.title}}</p>
+              <p>{{book.title}}</br><p style="color: grey">{{book.isbn}}</p></p>
             </div>
             <div class="col-md-3" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
               <p>{{book.author}}</p>

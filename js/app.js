@@ -15,11 +15,11 @@ app.controller('MainCtrl', ['$scope',
     $scope.format = '';
 
     $scope.bookListing = [
-      { thumbnail: '', title: 'Calculus, Seventh Edition', author: 'James Stewart', format: 'Hardcover', condition: 'Poor', price: 35 },
-      { thumbnail: '', title: 'Biology, Sixth Edition', author: 'James D. Watson', format: 'Paperback', condition: 'Like New', price: 45 },
-      { thumbnail: '', title: 'CoreMacroeconomics', author: 'Eric Chiang', format: 'Paperback', condition: 'Poor', price: 20},
-      { thumbnail: '', title: 'Fundamentals of Anatomy', author: 'Frederic Martini', format: 'Hardcover', condition: 'New', price: 40},
-      { thumbnail: '', title: 'University Physics', author: 'Daniel Rubinfield', format: 'Hardcover', condition: 'New', price: 70}
+      { thumbnail: '', title: 'Calculus, Seventh Edition', isbn: '0840048254', author: 'James Stewart', format: 'Hardcover', condition: 'Poor', price: 35 },
+      { thumbnail: '', title: 'Biology, Sixth Edition', isbn: '0321762436', author: 'James D. Watson', format: 'Paperback', condition: 'Like New', price: 45 },
+      { thumbnail: '', title: 'CoreMacroeconomics', isbn: '1429278498', author: 'Eric Chiang', format: 'Paperback', condition: 'Poor', price: 20},
+      { thumbnail: '', title: 'Fundamentals of Anatomy', isbn: '0130422983', author: 'Frederic Martini', format: 'Hardcover', condition: 'New', price: 40},
+      { thumbnail: '', title: 'University Physics', isbn: '0321696867', author: 'Hugh D. Young', format: 'Hardcover', condition: 'New', price: 70}
     ];
 
     $scope.sellBook = { thumbnail: '', title: '', author: '', format: '', condition: '', price: 0};
