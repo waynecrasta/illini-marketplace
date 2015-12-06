@@ -223,43 +223,26 @@
         </div>
 
         <!-- Main Section -->
-        <div class="col-md-9" style="border-right:1px solid #eee;margin-left:360px;">
-          <div class="row" style="border-bottom:1px solid #eee;">
-            <div class="col-md-2" style="background-color:#eee;border-left:1px solid #ccc"></div>
-            <div class="col-md-3" style="background-color:#eee;border-left:1px solid #ccc">
-              <h4>Title</h4>
-            </div>
-            <div class="col-md-3" style="background-color:#eee;border-left:1px solid #ccc">
-              <h4>Author</h4>
-            </div>
-            <div class="col-md-3" style="background-color:#eee;border-left:1px solid #ccc">
-              <h4>Format</h4>
-            </div>
-            <div class="col-md-1" style="background-color:#eee;border-left:1px solid #ccc">
-              <h4>Price</h4>
-            </div>
-          </div>
-
-          <div class="row" ng-repeat="book in bookListing | filter:searchQuery | filter:filt">
-            <div class="col-md-2" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
-              <img ng-src="" style="" />
-            </div>
-            <div class="col-md-3" style="border-left:1px solid #ccc;min-height:50px;border-bottom:1px solid #ccc;">
-              <p>{{book.title}}</br><p style="color: grey">{{book.isbn}}</p></p>
-            </div>
-            <div class="col-md-3" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
-              <p>{{book.author}}</p>
-            </div>
-            <div class="col-md-3" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
-              <p>{{book.format}}</p>
-            </div>
-            <div class="col-md-1" style="border-left:1px solid #eee;min-height:50px;border-bottom:1px solid #ccc;">
-              <p>${{book.price}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> <!-- /container -->
+        <table class="table table-striped" style="margin-left:350px; width: 900px; ">
+  <thead>
+    <tr>
+      <th>Cover</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Format</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="book in bookListing | filter:searchQuery | filter:filt">
+      <td><img ng-src="{{ book.thumbnail }}" style="height: 143px; width:112px"/></td>
+      <td>{{ book.title }}</br><p style="color: grey">{{book.isbn}}</p></td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.format }}</td>
+      <td>${{ book.price }}</td>
+    </tr>
+  </tbody>
+</table><!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
