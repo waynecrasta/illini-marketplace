@@ -22,10 +22,19 @@ app.controller('MainCtrl', ['$scope',
       { thumbnail: 'http://www-fp.pearsonhighered.com/assets/hip/images/bigcovers/080532187X.jpg', title: 'University Physics', isbn: '0321696867', author: 'Hugh D. Young', format: 'Hardcover', condition: 'New', price: 70, sellerEmail: 'test@hotmail.com'}
     ];
 
-    $scope.sellBook = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0};
-    $scope.sellBook2 = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0};
+    $scope.sellBook = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0 };
+    $scope.sellBook2 = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0 };
 
     $scope.shoppingCart = [];
+
+    $scope.clearFilters = function() {
+      $scope.condition = '';
+      $scope.minPrice = '';
+      $scope.maxPrice = '';
+      $scope.author = '';
+      $scope.format = '';
+      $scope.filt = {};
+    }
 
     $scope.sellBook = function() {
       if(!$scope.sellBook.thumbnail || $scope.sellBook.thumbnail == '') {
