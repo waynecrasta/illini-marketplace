@@ -6,6 +6,9 @@
 
     <title>Illini Marketplace</title>
 
+    <!-- Custom Styling -->
+    <link rel="stylesheet" href="css/style.css">
+    
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
 
@@ -22,7 +25,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#"><img src="images/logo2.png" alt="Logo" style="width:330px;height:30px;"></a>
+          <a class="navbar-brand" href="#"><img src="images/logo2.png" alt="Logo" style="width:330px;height:30px;margin-top:-10px;"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse navbar-right">
           <form class="navbar-form" style="float:left;">
@@ -32,8 +35,8 @@
             <button type="submit" class="btn btn-primary">Search</button>
           </form>
           <button class="btn btn-info" style="float:left;margin-top:8px;margin-left:-10px;" data-toggle="modal" data-target="#sellModal">Sell</button>
-          <a href="#" style="float:left;margin-top:15px;font-size:20px;margin-left:5px;">
-            <span class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="#cartModal"></span>
+          <a href="#" style="float:left;margin-top:15px;font-size:20px;margin-left:5px;" data-toggle="modal" data-target="#cartModal">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
             <span class="badge" style="margin-top:-8px;">0</span>
           </a>
         </div><!--/.navbar-collapse -->
@@ -49,16 +52,18 @@
         <h4 class="modal-title" id="myModalLabel">Sell your Book!</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="form" ng-submit="sellBook()" onsubmit="window.location.assign('#close')">
-          <div class="text-center">
-            <img src="" class="avatar img-circle" alt="avatar">
-            <h6>Upload a different photo...</h6>
-            <input type="file" class="form-control">
-          </div><br>
+        <div class="alert alert-danger" ng-show="sellError" role="alert">{{sellError}}</div>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Image File URL:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model="sellBook.thumbnail" value="" placeholder="Paste the URL for the image online">
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Contact Email:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="">
+              <input class="form-control" type="text" ng-model="sellBook.sellerEmail" value="">
             </div>
           </div>
           <div class="form-group">
@@ -76,19 +81,19 @@
           <div class="form-group">
             <label class="col-lg-3 control-label">Courses:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="">
+              <input class="form-control" type="text" value="" ng-model="sellBook.courses" placeholder="Enter the relevant courses. Comma Separated.">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">ISBN:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="">
+              <input class="form-control" type="text" ng-model="sellBook.isbn" value="">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Edition:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="">
+              <input class="form-control" type="text" ng-model="sellBook.edition" value="">
             </div>
           </div>
           <div class="form-group">
@@ -126,14 +131,14 @@
           <div class="form-group">
             <label class="col-lg-3 control-label">Other descriptions:</label>
             <div class="col-lg-8">
-              <textarea class="form-control" rows="3"></textarea>
+              <textarea class="form-control" rows="3" ng-model="sellBook.description"></textarea>
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
-              <input type="submit" class="btn btn-primary" value="Sell!">
+              <button ng-click="sellBook()" data-dismiss="modal" class="btn btn-primary">Sell!</button>
               <span></span>
               <input type="reset" class="btn btn-default" data-dismiss="modal" value="Cancel">
             </div>
@@ -144,20 +149,40 @@
   </div>
 </div>
 
-    <!-- Sell Books Modal -->
+    <!-- Cart Modal -->
     <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Shopping Cart</h4>
-      </div>
-      <div class="modal-body">
-        
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Shopping Cart</h4>
+          </div>
+          <div class="modal-body">
+            <div ng-hide="shoppingCart.length > 0">You Have No Items in Your Cart!</div>
+            <table ng-show="shoppingCart.length > 0" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Seller Contact</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="book in shoppingCart">
+                  <td>
+                    <img ng-src="{{ book.thumbnail }}" style="width:85px"/>
+                    <h5>{{ book.title }}</h5>
+                    <small>{{ book.author }}</small>
+                  </td>
+                  <td><h5>${{ book.price }}</h5></td>
+                  <td><h5>{{ book.sellerEmail }}</td>
+                </tr>
+              </tbody>
+            </table><!-- /container -->
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
     <div class="container" style="width:100%;height:50px;"></div>
 
@@ -166,7 +191,7 @@
       <div class="row">
         
         <!-- Filters Section -->
-        <div class="col-md-3" style="border-right:1px solid #ccc;border-left:1px solid #ccc;position:fixed;height:725px;">
+        <div class="col-md-2" style="border-right:1px solid #ccc;border-left:1px solid #ccc;position:fixed;height:725px;">
           <div style="height:50px;width:100%;padding-top:1px;">
             <h2>Filters</h2><br>
           </div>
@@ -192,16 +217,16 @@
             <h3>Price Range:</h3>
             <form style="margin-left:15px;">
               <span style="float:left;margin-top:8px;">$</span>
-              <input type="text" style="width:60px;float:left;margin-left:2px;" placeholder="min" class="form-control" name="priceMin" ng-model="minPrice">
+              <input type="number" style="width:70px;float:left;margin-left:2px;" placeholder="min" class="form-control" name="priceMin" ng-model="minPrice">
               <span style="float:left;margin-left:5px;margin-top:8px;"> - $</span>
-              <input type="text" style="width:60px;margin-left:5px;" placeholder="max" class="form-control" name="priceMax" ng-model="maxPrice">
+              <input type="number" style="width:70px;margin-left:5px;" placeholder="max" class="form-control" name="priceMax" ng-model="maxPrice">
             </form>
           </div>
 
           <div style="border-bottom:1px solid #eee;">
             <h3>Author:</h3>
             <form style="margin-left:15px;">
-              <div class="form-group" style="margin-left:15px;">
+              <div class="form-group">
                 <input type="text" style="width:200px;" placeholder="Custom Author" class="form-control" ng-model="filt.author">
               </div>
             </form>
@@ -223,26 +248,65 @@
         </div>
 
         <!-- Main Section -->
-        <table class="table table-striped" style="margin-left:350px; width: 900px; ">
-  <thead>
-    <tr>
-      <th>Cover</th>
-      <th>Title</th>
-      <th>Author</th>
-      <th>Format</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="book in bookListing | filter:searchQuery | filter:filt">
-      <td><img ng-src="{{ book.thumbnail }}" style="height: 143px; width:112px"/></td>
-      <td>{{ book.title }}</br><p style="color: grey">{{book.isbn}}</p></td>
-      <td>{{ book.author }}</td>
-      <td>{{ book.format }}</td>
-      <td>${{ book.price }}</td>
-    </tr>
-  </tbody>
-</table><!-- /container -->
+        <table class="table table-striped" style="margin-left:300px; width: 900px; ">
+          <thead>
+            <tr>
+              <th>Cover</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Format</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="book in bookListing | filter:searchQuery | filter:filt | filter:filterPrice">
+              <td><img ng-src="{{ book.thumbnail }}" style="width:112px"/></td>
+              <td><a ng-click="setOpenBook(book)" data-toggle="modal" data-target="#bookDetailModal">{{ book.title }}</a></br><p style="color: grey">ISBN: {{book.isbn}}</p></td>
+              <td>{{ book.author }}</td>
+              <td>{{ book.format }}</td>
+              <td>${{ book.price }}</td>
+            </tr>
+          </tbody>
+        </table><!-- /container -->
+
+        <!-- Open Book Details Modal -->
+        <div class="modal fade" id="bookDetailModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{openBook.title}}</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row" style="padding-left:40px;">
+                  <div class="col-md-4">
+                    <img ng-src="{{ openBook.thumbnail }}" style="width:100%"/>
+                    <strong>Price: ${{openBook.price}}</strong>
+                  </div>
+                  <div class="col-md-7">
+                    <h4>{{openBook.title}}</h4>
+                    <h5 style="color:grey">{{openBook.author}}</h5>
+                    <h5>ISBN: <p>{{openBook.isbn}}</p></h5>
+                    <h5 ng-show="openBook.edition">Edition: <p>{{openBook.edition}}</p></h5>
+                    <h5>Format: <p>{{openBook.format}}</p></h5>
+                    <h5>Condition: <p>{{openBook.condition}}</p></h5>
+                    <h5 ng-show="openBook.courses">Courses: {{openBook.courses}}</h5>
+                    <h5 ng-show="openBook.description">Description:</h5>
+                    <p ng-show="openBook.description">{{openBook.description}}</p>
+                  </div>
+                </div><br><br>
+                <div class="row" style="padding-left:55px;">
+                  <p>Contact Email: {{openBook.sellerEmail}}</p>
+                  <small>NOTE: Only contact the seller regarding this book!</small>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-success" ng-click="addToCart()">Add to Cart</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
 
     <!-- Bootstrap core JavaScript
