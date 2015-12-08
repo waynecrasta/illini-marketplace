@@ -95,6 +95,24 @@ app.controller('MainCtrl', ['$scope',
     $scope.addToCart = function() {
       $scope.shoppingCart.push($scope.openBook);
     }
+
+    $scope.isInCart = function(book) {
+      var i = $scope.shoppingCart.indexOf(book);
+
+      if(i != -1) {
+        return true;
+      }
+
+      return false;
+    }
+
+    $scope.removeFromCart = function(book) {
+      var i = $scope.shoppingCart.indexOf(book);
+
+      if(i != -1) {
+        $scope.shoppingCart.splice(i, 1);
+      }
+    }
   }
 
 ]);

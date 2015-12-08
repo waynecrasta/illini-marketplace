@@ -165,6 +165,7 @@
                   <th>Item</th>
                   <th>Price</th>
                   <th>Seller Contact</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -176,6 +177,7 @@
                   </td>
                   <td><h5>${{ book.price }}</h5></td>
                   <td><h5>{{ book.sellerEmail }}</td>
+                  <td><button type="button" class="btn btn-danger" ng-click="removeFromCart(book)">Delete</button></td>
                 </tr>
               </tbody>
             </table><!-- /container -->
@@ -302,7 +304,8 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-success" ng-click="addToCart()">Add to Cart</button>
+                <button type="button" data-dismiss="modal" class="btn btn-success" ng-hide="isInCart(openBook)" ng-click="addToCart()">Add to Cart</button>
+                <button type="button" data-dismiss="modal" class="btn btn-success" disabled="disabled" ng-show="isInCart(openBook)">Already Added to Cart</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div><!-- /.modal-content -->
