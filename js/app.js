@@ -15,15 +15,15 @@ app.controller('MainCtrl', ['$scope',
     $scope.format = '';
 
     $scope.bookListing = [
-      { thumbnail: 'http://i.imgur.com/6MBGHZk.png', title: 'Calculus, Seventh Edition', isbn: '0840048254', author: 'James Stewart', format: 'Hardcover', condition: 'Poor', price: 35, sellerEmail: 'test@gmail.com' },
-      { thumbnail: 'http://ecx.images-amazon.com/images/I/410ZFNT2MVL._SX380_BO1,204,203,200_.jpg', title: 'Biology, Sixth Edition', isbn: '0321762436', author: 'James D. Watson', format: 'Paperback', condition: 'Like New', price: 45, sellerEmail: 'test@yahoo.com' },
-      { thumbnail: 'http://ecx.images-amazon.com/images/I/51AvplHE2NL._SX384_BO1,204,203,200_.jpg', title: 'CoreMacroeconomics', isbn: '1429278498', author: 'Eric Chiang', format: 'Paperback', condition: 'Poor', price: 20, sellerEmail: 'test@aol.com'},
-      { thumbnail: 'http://ecx.images-amazon.com/images/I/51DzIdCKr0L._SX258_BO1,204,203,200_.jpg', title: 'Fundamentals of Anatomy', isbn: '0130422983', author: 'Frederic Martini', format: 'Hardcover', condition: 'New', price: 40, sellerEmail: 'test@gmail.com'},
-      { thumbnail: 'http://www-fp.pearsonhighered.com/assets/hip/images/bigcovers/080532187X.jpg', title: 'University Physics', isbn: '0321696867', author: 'Hugh D. Young', format: 'Hardcover', condition: 'New', price: 70, sellerEmail: 'test@hotmail.com'}
+      { thumbnail: 'http://i.imgur.com/6MBGHZk.png', title: 'Calculus, Seventh Edition', isbn: '0840048254', author: 'James Stewart', format: 'Hardcover', condition: 'Poor', price: 35, sellerEmail: 'test@gmail.com', courses: 'Math 221, Math 231, Math 241, Calculus 1, Calculus 2, Calculus 3' },
+      { thumbnail: 'http://ecx.images-amazon.com/images/I/410ZFNT2MVL._SX380_BO1,204,203,200_.jpg', title: 'Biology, Sixth Edition', isbn: '0321762436', author: 'James D. Watson', format: 'Paperback', condition: 'Like New', price: 45, sellerEmail: 'test@yahoo.com', courses: 'MCB 150, Micro Biology' },
+      { thumbnail: 'http://ecx.images-amazon.com/images/I/51AvplHE2NL._SX384_BO1,204,203,200_.jpg', title: 'CoreMacroeconomics', isbn: '1429278498', author: 'Eric Chiang', format: 'Paperback', condition: 'Poor', price: 20, sellerEmail: 'test@aol.com', courses: 'Econ 102, Macroeconomics' },
+      { thumbnail: 'http://ecx.images-amazon.com/images/I/51DzIdCKr0L._SX258_BO1,204,203,200_.jpg', title: 'Fundamentals of Anatomy', isbn: '0130422983', author: 'Frederic Martini', format: 'Hardcover', condition: 'New', price: 40, sellerEmail: 'test@gmail.com', courses: 'Anatomy and Physiology' },
+      { thumbnail: 'http://www-fp.pearsonhighered.com/assets/hip/images/bigcovers/080532187X.jpg', title: 'University Physics', isbn: '0321696867', author: 'Hugh D. Young', format: 'Hardcover', condition: 'New', price: 70, sellerEmail: 'test@hotmail.com', courses: 'Phys 211, Phys 212, Phys 213, Phys 214' }
     ];
 
-    $scope.sellBook = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0 };
-    $scope.sellBook2 = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0 };
+    $scope.sellBook = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0, sellerEmail: '', courses: '' };
+    $scope.sellBook2 = { thumbnail: '', title: '', author: '', format: '', isbn: 0, condition: '', price: 0, sellerEmail: '', courses: '' };
 
     $scope.shoppingCart = [];
 
@@ -63,6 +63,10 @@ app.controller('MainCtrl', ['$scope',
       }
       if(!$scope.sellBook.sellerEmail || $scope.sellBook.sellerEmail == '') {
         $scope.sellError = 'Please enter the email buyers can contact you through!';
+        return;
+      }
+      if(!$scope.sellBook.courses || $scope.sellBook.courses == '') {
+        $scope.sellError = 'Please enter the courses this book is used for!';
         return;
       }
       $scope.sellError = '';
